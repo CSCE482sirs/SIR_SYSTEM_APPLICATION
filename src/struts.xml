@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="gbk" ?> 
+<!DOCTYPE struts PUBLIC     
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"     "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+	<struts>
+	<!-- join jfreechart -->
+	<include file="struts-jfreechart.xml" />
+	
+	<constant name="struts.i18n.encoding" value="gbk" />
+	<constant name="struts.objectFactory" value="spring" />  
+	<constant name="struts.devMode" value="true" />
+	
+	
+	<!-- test case -->
+	<package name="content" extends="struts-default" namespace = "/content">
+		<global-results>
+	        	<result name="success">/test.jsp</result>
+	        	
+	    </global-results>
+		<action name="addContent" class="ContentAction" method="add">
+			<result>/test.jsp</result>
+			
+		</action> 
+		<action name="removeContent" class="ContentAction" method="remove">
+			<result>/test.jsp</result>
+			
+		</action> 
+		<action name="listAllcontent" class="ContentAction" method="listAllcontent">
+			<result name="list">/test.jsp</result>
+			
+		</action> 
+		<action name="time" class="ContentAction" method="gettime2">
+			<result>/time.jsp</result>
+			
+		</action> 
+	
+	</package> 
+	
+	
+	<!-- developer manage --> 
+	<package name="developer" extends="struts-default">
+		
+		<action name="developerLogin" class="action.DeveloperAction" method="DeveloperLogin">
+			
+			<result name="success">/jsp/developer/developerMain.jsp</result>
+		</action> 
+	</package> 
+	
+	<!-- product manage -->
+	<package name="product" extends="struts-default">
+		<global-results>
+	        	<result name="gsuccess">/jsp/developer/products.jsp</result>
+	        	
+	    </global-results>
+		<action name="listProducts" class="action.ProductAction" method="listProducts">
+			
+			<result name="success">/jsp/product_manager/products.jsp</result>
+		</action> 
+		<action name="listAtt" class="action.ProductAction" method="listAtt">
+			
+			<result name="success">/jsp/attributes/att.jsp</result>
+		</action> 
+		<action name="addatt" class="action.ProductAction" method="addAtt">
+			
+			<result name="success">/jsp/attributes/att_main.jsp</result>
+		</action> 
+		<action name="addProduct" class="action.ProductAction" method="addProduct">
+			
+			<result name="success">/jsp/developer/products.jsp</result>
+		</action> 
+		<action name="removeproduct" class="action.ProductAction" method="removeproduct">
+			
+			<result name="success">/jsp/developer/products.jsp</result>
+		</action> 
+		<action name="deleteatt" class="action.ProductAction" method="removepatt">
+			
+			<result name="success">/jsp/attributes/att.jsp</result>
+		</action> 
+		<action name="listproatt" class="action.ProductAction" method="listproatt">
+			
+			<result name="success">/jsp/product_manager/pro_att.jsp</result>
+		</action> 
+		<action name="addProAtt" class="action.ProductAction" method="addProAtt">
+			
+			<result name="success">/jsp/product_manager/pro_att.jsp</result>
+		</action> 
+		<action name="display_proatt" class="action.ProductAction" method="display_proatt">
+			
+			<result name="success">/jsp/product_manager/product_main.jsp</result>
+		</action> 
+		<action name="remove_proatt" class="action.ProductAction" method="remove_proatt">
+			
+			<result name="success">/jsp/product_manager/pro_att.jsp</result>
+		</action> 
+		<action name="listproatt_data" class="action.ProductAction" method="listproatt_data">
+			
+			<result name="success">/jsp/product_manager/product_data.jsp</result>
+		</action> 
+	</package> 
+	
+	
+	<!-- rating manage --> 
+	<package name="rating" extends="struts-default">
+		<global-results>
+	        	<result name="gsuccess">/jsp/rating/ratinglist.jsp</result>
+	        	
+	    </global-results>
+		<action name="addRating" class="action.RatingAction" method="addRating">
+			
+			<result name="success">/jsp/rating/ratingMain.jsp</result>
+		</action> 
+		
+		<action name="GetRate" class="action.RatingAction" method="GetRate">
+			
+			<result name="success">/jsp/rating.jsp</result>
+		</action> 
+		<action name="RemoveRate" class="action.RatingAction" method="RemoveRate">
+			
+			<result name="success">/jsp/rating.jsp</result>
+		</action> 
+	</package> 
+
+</struts>

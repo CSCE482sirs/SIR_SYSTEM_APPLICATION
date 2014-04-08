@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="gbk"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+    <!-- jpa -->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />  
+    
+    <!-- Entity Factory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">         
+		<property name="dataSource" ref="dataSource" />         
+		<property name="jpaVendorAdapter">             
+		<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"> 
+			<property name="database" value="MYSQL" /> 
+			<property name="showSql" value="true" /> 
+		</bean>         
+		</property>     
+	</bean>
+	
+	<!-- Data Source -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">         
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />         
+		<property name="url" value="jdbc:mysql://localhost/sir" />         
+		<property name="username" value="root" />         
+		<property name="password" value="root" />     
+	</bean>  
+	
+	<!-- Transaction Manager -->    
+	<bean id="transactionManager"         
+		  class="org.springframework.orm.jpa.JpaTransactionManager">         
+		  <property name="entityManagerFactory" ref="entityManagerFactory" />     
+	</bean>   
+	 
+	 <!-- Transaction Manager -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!-- User bean -->
+	<!-- 
+	<bean id="memberdao" class="dao.MemberDaoImpl"/>
+	<bean id="loginverify" class="util.LoginVerify">
+		<property name="memberdao" ref="memberdao"></property>
+	</bean>
+	<bean id="loginservice" class="service.LoginService">
+		<property name="memberdao" ref="memberdao"></property>
+		<property name="loginverify" ref="loginverify"></property>
+	</bean>
+	<bean id="MemberAction" scope="prototype"
+			class="action.MemberAction">
+			<property name="loginservice" ref="loginservice"></property> </bean>
+    -->
+    
+  
+   <!-- test case -->
+   
+	<bean id="contentDao" class="dao.ContentDaoImpl" />   
+	<bean id="contentservice" class="service.ContentImpt" >
+		<property name="contentDao" ref="contentDao"></property>  
+	</bean>
+	<bean id="ContentAction" scope="prototype" class="action.ContentAction">
+			<property name="contentservice" ref="contentservice"></property> 
+			
+	</bean >
+	
+	<!-- sir_product -->
+	<bean id="attdao" class= "dao.AttDaoImpl" />
+	<bean id="productdao" class="dao.ProductDaoImpl" />   
+	<bean id="proattdao" class= "dao.Pro_AttDaoImpl" />
+	<bean id="productservice" class="service.ProductServiceImpl" >
+		<property name="productdao" ref="productdao"></property>  
+		<property name="attdao" ref="attdao"></property>  
+		<property name="proattdao" ref="proattdao"></property>
+	</bean>
+	
+	<bean id="ProductAction" scope="prototype" class="action.ProductAction">
+			<property name="productservice" ref="productservice"></property> 
+			
+	</bean >
+	
+	<!-- sir_developer -->
+	<bean id="dao" class="dao.DeveloperDaoImpl" />   
+	<bean id="developserservice" class="service.DeveloperServiceImpl" >
+		<property name="dao" ref="dao"></property>  
+	</bean>
+	
+	<bean id="DeveloperAction" scope="prototype" class="action.DeveloperAction">
+			<property name="developserservice" ref="developserservice"></property> 
+			
+	</bean >
+	<!-- Rating -->
+	<bean id="ratingdao" class="dao.RatingDaoImpl" />   
+	<bean id="ratingservice" class="service.RatingServiceImpl" >
+		<property name="ratingdao" ref="ratingdao"></property>  
+	</bean>
+	
+	<bean id="RatingAction" scope="prototype" class="action.RatingAction">
+			<property name="ratingservice" ref="ratingservice"></property> 
+			<property name="productservice" ref="productservice"></property> 
+	</bean >
+</beans>
