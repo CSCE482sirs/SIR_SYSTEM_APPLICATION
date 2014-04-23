@@ -17,6 +17,15 @@ public class Attribute_value
 	private Integer product_id;
 	@Column(name = "att_value")
 	private String att_value;
+	@Column(name = "good_id")
+	private String good_id;
+	
+	public String getGood_id() {
+		return good_id;
+	}
+	public void setGood_id(String good_id) {
+		this.good_id = good_id;
+	}
 	public Integer getAvid() {
 		return avid;
 	}
@@ -29,6 +38,8 @@ public class Attribute_value
 	public void setAtt_id(Integer att_id) {
 		this.att_id = att_id;
 	}
+	
+	
 	public Integer getProduct_id() {
 		return product_id;
 	}

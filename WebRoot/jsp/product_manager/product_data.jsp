@@ -21,37 +21,78 @@
       <table width="100%" border="0" cellPadding="0" cellSpacing="1" bgcolor="#6386d6">
           
           <!-- data -->
-        <s:if test="pro_atts.size > 0"> 
-        <tr id="1" bgcolor="#EFF3F7" class="TableBody1" onmouseover="this.bgColor = '#DEE7FF';" onmouseout="this.bgColor='#EFF3F7';">
-		<s:iterator value="pro_atts" >
-			 
-			
-		      
-	          <td align="center" vAlign="middle"><s:property value="att_name" /></td>
-	         
-	          
-	     	  
-	          
-			
-         </s:iterator>
-         </tr>
-		</s:if>	
+        
+       
 		
-        <!-- 在列表数据为空的时候，要显示的提示信息 -->
+		
+        
 	    
-	    
-	   <s:if test="pro_atts.size == 0">  
-	    <tr>
-	    	<td colspan="7" align="center" bgcolor="#EFF3F7" class="TableBody1" onmouseover="this.bgColor = '#DEE7FF';" onmouseout="this.bgColor='#EFF3F7';">
-	    	No Data Now.
-	    	</td>
-	    </tr>
-	    </s:if>
+	
 	    
       </table>
           
-
-      
+	  
+       
+      <table width="100%" border="0" cellPadding="0" cellSpacing="1" bgcolor="#6386d6">
+      	  <tr id="1" bgcolor="#EFF3F7" class="TableBody1" onmouseover="this.bgColor = '#DEE7FF';" onmouseout="this.bgColor='#EFF3F7';">
+			<s:iterator value="pro_atts" >
+				 
+				
+			      
+		          <td width="20%" align="center" vAlign="middle"><s:property value="att_name" /></td>
+		         
+		          
+		     	  
+		          
+				
+	         </s:iterator>
+         	<td width="10%" align="center" vAlign="middle"></td>
+         </tr>
+         <tr id="1" bgcolor="#EFF3F7" class="TableBody1" onmouseover="this.bgColor = '#DEE7FF';" onmouseout="this.bgColor='#EFF3F7';">
+         	<s:iterator value="att_values">
+         	
+	         	 
+				 
+					  <td width="10%" align="center" vAlign="middle">
+					    <table>
+						  <s:iterator value="value">
+						  	 <tr id="1" bgcolor="#EFF3F7" class="TableBody1" onmouseover="this.bgColor = '#DEE7FF';" onmouseout="this.bgColor='#EFF3F7';">
+						    	<td width="10%" align="center" vAlign="middle">
+						    		<s:property value="att_value"/>
+						    	</td>
+						    	
+						    </tr>
+						    
+						  </s:iterator>
+						 </table>
+						 
+					  </td>
+					  
+					  <s:if test="key == att_values.size()-1">  
+					  <td>
+				  	  <table>
+						  <s:iterator value="value">
+						  	 <tr id="1" bgcolor="#EFF3F7" class="TableBody1" onmouseover="this.bgColor = '#DEE7FF';" onmouseout="this.bgColor='#EFF3F7';">
+						    	<td width="10%" align="center" vAlign="middle">
+							    	
+							    	<s:url id="addRating" action="addRating">
+										<s:param name="rating.values" value="att_value" />
+										
+									</s:url>
+									<sx:a href="%{addRating}" targets="rating">Like</sx:a>
+									
+						    	</td>
+						    	
+						    </tr>
+						    
+						  </s:iterator>
+						 </table>
+					  </td>
+					  </s:if>
+			</s:iterator>
+			
+       	 </tr>
+      </table>
       
          
      

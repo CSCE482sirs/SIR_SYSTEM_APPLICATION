@@ -28,11 +28,11 @@ public class SelectInputRecommender {
 		this.data = data;
 	}
 	
-	public List<Product> recommend( User user, String args )
+	public List<Product> recommend( User user, String args ,Map<Product, Double> user_col_vect)
 	{
 		List<Product> products = data.get_products(dev); 
 		Map<Product, Map<Product, Double>> pro_col_vects = data.get_products_collaborative_vectors(dev, products);
-		Map<Product, Double> user_col_vect = data.get_user_collaborative_vector(dev, products, user);
+		//Map<Product, Double> user_col_vect = data.get_user_collaborative_vector(dev, products, user);
 		do_cosine_sim( products, user_col_vect, pro_col_vects );
 		Collections.sort(products);
 		Collections.reverse(products);
@@ -41,6 +41,7 @@ public class SelectInputRecommender {
 	
 	private <T> void do_cosine_sim( List<Product> products, Map<T, Double> user_vect, Map<Product, Map<T, Double >> product_vects )
 	{
+		List<Product> products_tmp = data.get_products(dev);
 		for( Product product: product_vects.keySet() )
 		{
 			Map< T, Double > product_vect = product_vects.get( product );
@@ -51,10 +52,13 @@ public class SelectInputRecommender {
 				double dot_product = 0.0;
 				for (T x: user_vect.keySet() )
 				{
-					if( product_vect.containsKey(x) )
+					int id = ((Product) x).getId();
+					Product pro = products_tmp.get(id);
+					
+					if( product_vect.containsKey(pro) )
 					{
 						double user_value = user_vect.get(x);
-						double product_value = product_vect.get(x);
+						double product_value = product_vect.get(pro);
 						//System.out.print( "("+user_value+","+product_value+")" );
 						dot_product += user_value*product_value;
 						user_sum_of_squares += user_value*user_value;
@@ -74,9 +78,9 @@ public class SelectInputRecommender {
 		TestDataGenerator test = new TestDataGenerator( 20, 20, 2 );
 		Developer dev = new Developer("dave", 0);
 		SelectInputRecommender sir = new SelectInputRecommender(dev, test);
-		for( Product p: sir.recommend(new User(1), "") )
+		//for( Product p: sir.recommend(new User(1), "") )
 		{
-			System.out.println(p);
+			//System.out.println(p);
 		}
 	}
 }

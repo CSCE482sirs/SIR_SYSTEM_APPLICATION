@@ -1,5 +1,9 @@
 package action;
+import java.util.ArrayList;
+import service.RatingService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,10 +14,16 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import com.opensymphony.xwork2.Preparable;
 
 import pojo.Attribute_name;
+import pojo.Attribute_value;
 import pojo.Developer;
 import pojo.Product;
 import pojo.Product_Att;
+import pojo.Rating;
+import pojo.User;
+import service.AVService;
 import service.ProductService;
+import util.SelectInputRecommender;
+import util.TestDataGenerator;
 public class ProductAction implements Preparable,ServletRequestAware
 {
 
@@ -29,8 +39,34 @@ public class ProductAction implements Preparable,ServletRequestAware
 	private Integer developer_id;
 	private String pname;
 	private Integer pro_att_id;
+	private Map<Integer,List<Attribute_value>> att_values;
+	private AVService avservice;
+	private RatingService ratingservice;
 	
-	
+	public RatingService getRatingservice() {
+		return ratingservice;
+	}
+
+	public void setRatingservice(RatingService ratingservice) {
+		this.ratingservice = ratingservice;
+	}
+
+	public Map<Integer, List<Attribute_value>> getAtt_values() {
+		return att_values;
+	}
+
+	public void setAtt_values(Map<Integer, List<Attribute_value>> att_values) {
+		this.att_values = att_values;
+	}
+
+	public AVService getAvservice() {
+		return avservice;
+	}
+
+	public void setAvservice(AVService avservice) {
+		this.avservice = avservice;
+	}
+
 	public Integer getPro_att_id() {
 		return pro_att_id;
 	}
@@ -164,6 +200,7 @@ public class ProductAction implements Preparable,ServletRequestAware
 		developer_id = developer.getId();
 		this.products = productservice.getBySQL("select p from Product p where dev_id = "+developer_id);
 		
+		
 		return "success";
 		
 	}
@@ -205,7 +242,19 @@ public class ProductAction implements Preparable,ServletRequestAware
 	}
 	public String listproatt_data()
 	{
+		att_values = new HashMap<Integer,List<Attribute_value>>();
+		HttpServletRequest request = ServletActionContext.getRequest();  
+		pid=(Integer) request.getAttribute("pid");
+		//System.out.println("asdfasdfasdf"+pid);
+		
 		this.pro_atts=productservice.getProAtt("select a from Product_Att a where pro_id = "+pid+"" );
+		
+		List<Attribute_value> att_value= new ArrayList<Attribute_value>();
+		for(int i=0;i<this.pro_atts.size();i++)
+		{
+			att_value = avservice.getBySQL("select av from Attribute_value av where product_id ="+pid +" and att_id="+this.pro_atts.get(i).getAtt_id());
+			att_values.put(i,att_value);
+		}
 		product = productservice.getById(pid);
 		return "success";
 	}
@@ -240,5 +289,85 @@ public class ProductAction implements Preparable,ServletRequestAware
 		return "gsuccess";
 	}
 	
+	public String saveAV()
+	{
+		return "success";
+	}
 	
+	public String recomend()
+	{
+		//pid=1;
+		att_values = new HashMap<Integer,List<Attribute_value>>();
+		HttpServletRequest request = ServletActionContext.getRequest();  
+		pid=(Integer) request.getAttribute("pid");
+		//System.out.println("asdfasdfasdf"+pid);
+		
+		this.pro_atts=productservice.getProAtt("select a from Product_Att a where pro_id = "+pid+"" );
+		
+		List<Attribute_value> att_value= new ArrayList<Attribute_value>();
+		for(int i=0;i<this.pro_atts.size();i++)
+		{
+			att_value = avservice.getBySQL("select av from Attribute_value av where product_id ="+pid +" and att_id="+this.pro_atts.get(i).getAtt_id());
+			att_values.put(i,att_value);
+		}
+		@SuppressWarnings("unused")
+		int size = 0,att_values_size =0;
+		
+		
+		List<Rating> ratings = ratingservice.getBySQL("select r from Rating r");
+		size = ratings.size();
+		att_values_size = att_values.size();
+		Map<Product, Double> pros = new HashMap<Product, Double>();
+		int count=0;
+		Product product;
+		products = new ArrayList<Product>();
+		
+			for(int j=0;j<att_values.get(att_values_size-1).size();j++)
+			{
+				product = new Product (j+"",j);
+				product.setName(att_values.get(att_values_size-1).get(j).getAtt_value());
+				pros.put(product, 0.0);
+				products.add(product);
+			}
+			
+			
+			
+			for (Map.Entry<Product, Double> entry : pros.entrySet()) 
+			{
+				
+				count=0;
+				String value = entry.getKey().getName().toString();
+				for (int i=0;i<ratings.size();i++)
+				{
+					   
+					   
+					   if(ratings.get(i).getValues().equals(value))
+					   {
+						   
+						   count++;
+					   }
+				}
+				
+				pros.put(entry.getKey(), (count*1.0)/(pros.size()*1.0));
+					
+				
+				
+					
+				
+			}
+			
+			TestDataGenerator test = new TestDataGenerator( pros.size(), 1, 1 );
+			Developer dev = new Developer("dave", 0);
+			SelectInputRecommender sir = new SelectInputRecommender(dev, test);
+			products =sir.recommend(new User(1), "",pros);
+			int x=0;
+			for (Map.Entry<Product, Double> entry : pros.entrySet()) 
+			{
+				products.get(x).setName(entry.getKey().getName());
+				products.get(x).setId(x++);
+			}
+		
+		
+		return "success";
+	}
 }

@@ -11,6 +11,5 @@
 				
 				<s:submit  />
 				</s:form>
-	</div>
 	
 <%@include file="/commons/foot.jsp" %>

@@ -96,6 +96,11 @@
 			
 			<result name="success">/jsp/product_manager/product_data.jsp</result>
 		</action> 
+		<action name="recomend" class="action.ProductAction" method="recomend">
+			
+			<result name="success">/jsp/demo/demolist.jsp</result>
+		</action> 
+		
 	</package> 
 	
 	
@@ -107,7 +112,7 @@
 	    </global-results>
 		<action name="addRating" class="action.RatingAction" method="addRating">
 			
-			<result name="success">/jsp/rating/ratingMain.jsp</result>
+			<result name="success">/jsp/product_manager/product_data.jsp</result>
 		</action> 
 		
 		<action name="GetRate" class="action.RatingAction" method="GetRate">
@@ -117,6 +122,10 @@
 		<action name="RemoveRate" class="action.RatingAction" method="RemoveRate">
 			
 			<result name="success">/jsp/rating.jsp</result>
+		</action> 
+		<action name="Mydemo" class="action.RatingAction" method="Mydemo">
+			
+			<result name="success">/jsp/demo/demolist.jsp</result>
 		</action> 
 	</package> 
 

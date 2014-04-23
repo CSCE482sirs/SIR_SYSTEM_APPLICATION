@@ -7,7 +7,11 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import com.opensymphony.xwork2.Preparable;
 import pojo.Developer;
+import pojo.Product;
+import pojo.User;
 import service.DeveloperService;
+import util.SelectInputRecommender;
+import util.TestDataGenerator;
 
 public class DeveloperAction implements Preparable,ServletRequestAware
 {
@@ -47,6 +51,8 @@ public class DeveloperAction implements Preparable,ServletRequestAware
 	
 	public String DeveloperLogin()
 	{
+		
+		
 		
 		developer = developserservice.DevelopserLogin(Developer_name);
 		HttpServletRequest request = ServletActionContext.getRequest();  

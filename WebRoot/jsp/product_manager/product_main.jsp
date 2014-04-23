@@ -2,6 +2,15 @@
     pageEncoding="gbk"%>
 <%@include file="/commons/head.jsp" %>
 
+<script>
+function getText(value)
+{
+	document.getElementById("att_name").value=value;
+	
+}
+</script>
+
+
 
 Hello, ${sessionScope.user.username} <br>
 You are the ${session.user.id}th developer in our system<br>
@@ -25,9 +34,12 @@ You are the ${session.user.id}th developer in our system<br>
         <div style="width: 600px;border-style: solid">
         <p>Product:${product.name}</p>
         
-        <p><a href="#">Input Data</a>  |  <a href="listproatt_data.action?pid=${product.id}">Show The Product data</a>  |  
-        <a href="../attributes/addatt.jsp">Define Attributes</a></p>
+        <a href="product_data_main.jsp?pid=${product.id}">Show data</a>  |  
+        <a href="../attributes/addatt.jsp">Define Attributes</a>  |  
+        <a href="../attributes/select.jsp">Random Recommend Test</a>  | 
+        <a href="../rating/ratingMain.jsp">Show Rating</a>  | 
         
+        </p>
         <s:form action="addProAtt.action" method="post">
 			    <s:textfield id="pro_att_id" name="pro_att.pro_att_id" cssStyle="display:none"/>
 			    <s:textfield name="pro_att.pro_id" value ="%{product.id}" cssStyle="display:none"></s:textfield>
@@ -37,14 +49,14 @@ You are the ${session.user.id}th developer in our system<br>
 				   
     			<s:iterator value="att_names" status="st">
 				<tr>
-				<td><input type="checkbox" name="pro_att.att_id" value="<s:property  value="anid"/>"><s:property  value="name"/>
+				<td><input type="checkbox" onclick="getText('<s:property  value="name"/>')" name="pro_att.att_id" value="<s:property  value="anid"/>" ><s:property  value="name"/>
 				
 				</td>
 				
 				
 				</tr>
 				</s:iterator>
-				<s:textfield id="att_name"  name="pro_att.att_name" value = ""/>
+				<s:textfield id="att_name"  name="pro_att.att_name" cssStyle="display:none" />
 				<sx:submit notifyTopics="/refresh" />
 				
 			</s:form>

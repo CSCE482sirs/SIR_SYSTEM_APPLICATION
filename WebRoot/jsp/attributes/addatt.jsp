@@ -2,7 +2,9 @@
     pageEncoding="gbk"%>
 <%@include file="/commons/head.jsp" %>
 	
-		<div id="areabox"></div>
+		
+		
+	<br>	
 	<p>create your attributes</p>
 	<s:form action="addatt.action" method="post">
 			    <s:textfield id="anid" name="att_name.anid" cssStyle="display:none"/>
@@ -16,6 +18,6 @@
 				
 				<s:submit  />
 	</s:form>
-	</div>
+	
 	
 <%@include file="/commons/foot.jsp" %>

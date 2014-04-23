@@ -54,7 +54,7 @@
     -->
     
   
-   <!-- test case -->
+   <!-- test case 
    
 	<bean id="contentDao" class="dao.ContentDaoImpl" />   
 	<bean id="contentservice" class="service.ContentImpt" >
@@ -63,10 +63,11 @@
 	<bean id="ContentAction" scope="prototype" class="action.ContentAction">
 			<property name="contentservice" ref="contentservice"></property> 
 			
-	</bean >
+	</bean >-->
 	
 	<!-- sir_product -->
 	<bean id="attdao" class= "dao.AttDaoImpl" />
+	<bean id="attvaluedao" class= "dao.AttValueDaoImpl" />
 	<bean id="productdao" class="dao.ProductDaoImpl" />   
 	<bean id="proattdao" class= "dao.Pro_AttDaoImpl" />
 	<bean id="productservice" class="service.ProductServiceImpl" >
@@ -74,10 +75,13 @@
 		<property name="attdao" ref="attdao"></property>  
 		<property name="proattdao" ref="proattdao"></property>
 	</bean>
-	
+	<bean id="avservice" class="service.AVServiceImpl" >
+		<property name="attvaluedao" ref="attvaluedao"></property>  
+	</bean>
 	<bean id="ProductAction" scope="prototype" class="action.ProductAction">
 			<property name="productservice" ref="productservice"></property> 
-			
+			<property name="avservice" ref="avservice"></property> 
+			<property name="ratingservice" ref="ratingservice"></property> 
 	</bean >
 	
 	<!-- sir_developer -->

@@ -22,28 +22,24 @@
           <!-- title -->
 	      <tr bgcolor="#EFF3F7" class="TableBody1">
 		      
-		      <td width="30%" height="37" align="center"><b>rid</b></td>
-		      <td width="10%" height="37" align="center"><b>uid</b></td>
-              <td width="10%" height="37" align="center"><b>pid</b></td>
-               <td width="30%" height="37" align="center"><b>att_value</b></td>
-                <td width="10%" height="37" align="center"><b>default</b></td>
+		      <td width="20%" height="37" align="center"><b>id</b></td>
+		      <td width="40%" height="37" align="center"><b>name</b></td>
+              <td width="40%" height="37" align="center"><b>value</b></td>
           </tr>
           <!-- data -->
-        <s:if test="ratings.size > 0"> 
-		<s:iterator value="ratings" >
+        <s:if test="products.size > 0"> 
+		<s:iterator value="products" >
 			 
 			<tr id="1" bgcolor="#EFF3F7" class="TableBody1" onmouseover="this.bgColor = '#DEE7FF';" onmouseout="this.bgColor='#EFF3F7';">
 		      
-	          <td align="center" vAlign="middle"><s:property value="rid" /></td>
-	          <td align="center" vAlign="middle"><s:property value="uid" /></td>
-	           <td align="center" vAlign="middle"><s:property value="pid" /></td>
-	            <td align="center" vAlign="middle"><s:property value="values" /></td>
-	             <td align="center" vAlign="middle"><s:property value="default" /></td>
+	          <td align="center" vAlign="middle"><s:property value="id" /></td>
+	          <td align="center" vAlign="middle"><s:property value="name" /></td>
+	          <td align="center" vAlign="middle"><s:property value="value" /></td>
 	          <td>
-					<s:url id="removeUrls" action="RemoveRate">
-						<s:param name="rid" value="rid" />
+					<s:url id="removeUrls" action="deleteatt">
+						<s:param name="aid" value="anid" />
 					</s:url>
-					<sx:a href="%{removeUrls}" notifyTopics="/refresh">Remove</sx:a>
+					
 					
 			  </td>
 	     	  
@@ -55,7 +51,7 @@
         <!-- 在列表数据为空的时候，要显示的提示信息 -->
 	    
 	    
-	   <s:if test="ratings.size == 0">  
+	   <s:if test="products.size == 0">  
 	    <tr>
 	    	<td colspan="7" align="center" bgcolor="#EFF3F7" class="TableBody1" onmouseover="this.bgColor = '#DEE7FF';" onmouseout="this.bgColor='#EFF3F7';">
 	    	No Data Now.
